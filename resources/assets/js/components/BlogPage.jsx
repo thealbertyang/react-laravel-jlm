@@ -4,18 +4,17 @@ import { BrowserRouter as Router, NavLink, Link } from 'react-router-dom';
 import { Footer } from "./Footer";
 import * as Prism from "prismjs"
 import "prismjs/plugins/line-numbers/prism-line-numbers";
+import NavbarDos from '../components/NavbarDos'
 
 export class BlogPage extends React.Component {
 	componentDidMount() {
 		Prism.highlightAll(true);
 	}
-	componentDidUpdate() {
-		alert('true');
-	    
-	 }
+
 	render(){
 		return (
 			<div>
+				<NavbarDos/>
 				<section className="hero hero__blog">
 					<div className="container">
 						<div className="blog__header">

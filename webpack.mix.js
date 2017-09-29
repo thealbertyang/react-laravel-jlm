@@ -25,7 +25,7 @@ mix.options({
     ]
 });
 
-mix.js('resources/assets/js/app.tsx', 'public/js')
+mix.js('resources/assets/js/index.jsx', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css').webpackConfig({
         module: {
             rules: [
@@ -34,7 +34,8 @@ mix.js('resources/assets/js/app.tsx', 'public/js')
 			        loader: 'babel-loader',
 			        exclude: /node_modules/,
 			        query: {
-			        	presets: ['es2015', 'react']
+			        	presets: ['es2015', 'react'],
+                        plugins: ["transform-decorators-legacy", "transform-class-properties", "transform-object-rest-spread"]
 			        }
 			    },
                 // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
