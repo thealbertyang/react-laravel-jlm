@@ -3,10 +3,23 @@ export default function usersReducer(state = {
 	modalAddUser: false,
 	modalEditUser: false,
 	status: null,
-	errors: null
+	errors: null,
+	form: null
 }, action) {
 	switch(action.type) {
-		case "GET_USERS": {
+		case "FETCH_USER": {
+			state = {...state, status: 'getting_user' }
+			break;
+		}
+		case "FETCH_USER_SUCCESS": {
+			state = {...state, form: action.form, status: 'get_user_success'}
+			break;
+		}
+		case "FETCH_USER_ERROR": {
+			state = {...state, status: 'get_user_error' }
+			break;
+		}
+		case "FETCH_USERS": {
 			state = {...state, users: action.payload}
 			break;
 		}

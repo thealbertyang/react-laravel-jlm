@@ -27,8 +27,7 @@ export class DashboardPage extends React.Component {
 	render(){
 				return (
 					<div className="screen container-fluid">
-					<NavbarDos/>
-				      <div className="row">
+				      <div className="screen__container row">
 				        <Sidebar/>
 
 				        <main className="col-sm-9 ml-sm-auto col-md-10 pt-3 main" role="main">

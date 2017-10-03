@@ -78,29 +78,29 @@ class UsersController extends ApiFormController
 
         //IF VALID
         else { 
-                //Try to create contact
-                try { 
-                    if(User::create([
-                        'first_name' => request('first_name'),
-                        'last_name' => request('last_name'),
-                        'email' => request('email'),
-                        'password' =>  Hash::make(request('password'))
-                    ]))
-                    {
-                        return $this->respondSuccess('Successful submit.');
-                    }
+            //Try to create contact
+            try { 
+                if(User::create([
+                    'first_name' => request('first_name'),
+                    'last_name' => request('last_name'),
+                    'email' => request('email'),
+                    'password' =>  Hash::make(request('password'))
+                ]))
+                {
+                    return $this->respondSuccess('Successful submit.');
                 }
-                //Creating contact error
-                catch(\Illuminate\Database\QueryException $e){
-                    $errorCode = $e->errorInfo[1];
+            }
+            //Creating contact error
+            catch(\Illuminate\Database\QueryException $e){
+                $errorCode = $e->errorInfo[1];
 
-                    switch ($errorCode) {
-                        //1062 == Duplicate entry for unique MySQL
-                        case 1062: 
-                            return $this->respondDuplicate('Duplicate Entry.', ['user'=>'This user already exists.']); 
-                            break;
-                    }
+                switch ($errorCode) {
+                    //1062 == Duplicate entry for unique MySQL
+                    case 1062: 
+                        return $this->respondDuplicate('Duplicate Entry.', ['user'=>'This user already exists.']); 
+                        break;
                 }
+            }
         }
     }
 
@@ -112,7 +112,24 @@ class UsersController extends ApiFormController
      */
     public function show($id)
     {
-        //
+        try {
+            if($user = User::find($id)){
+                return $user;
+            }
+        }
+        catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+
+            switch ($errorCode) {
+                //1062 == Duplicate entry for unique MySQL
+                case 1062: 
+                    return $this->respondDuplicate('Duplicate Entry.', ['user'=>'This user already exists.']); 
+                    break;
+                default:
+                    return $this->respondInvalid('Invalid.', ['user'=> request()->all()]); 
+                    break;
+            }
+        } 
     }
 
     /**
@@ -135,31 +152,49 @@ class UsersController extends ApiFormController
      */
     public function update($id, Request $request)
     {
-        try {
-            //Update 
+         //VALIDATE FIELDS
+        $validator = Validator::make(request()->all(),
+        [
+            'first_name' => 'required|alpha|max:255',
+            'last_name' => 'required|alpha|max:255',
+            'email' => 'required|email',
+            'password' => 'max:99999999999'
+        ]);
 
-            $user = User::find($id);
-            $data = ['first_name' => request('first_name'), 'last_name' => request('last_name'), 'email' => request('email'), 'password' => ''];
-            $password = $request->password ? Hash::make(request('password')) : $user->password;
-            $data['password'] = $password;
+        //IF INVALID
+        if($validator->fails()){ 
+            return $this->respondInvalid('Error with validation.', $validator->errors());
+        }
 
-            if(User::where('id', $id)->update($data)){
-                return $this->respondSuccess('Successful edit.');
+        //IF VALID
+        else { 
+
+            try {
+                //Update 
+
+                $user = User::find($id);
+                $data = ['first_name' => request('first_name'), 'last_name' => request('last_name'), 'email' => request('email'), 'password' => ''];
+                $password = $request->password ? Hash::make(request('password')) : $user->password;
+                $data['password'] = $password;
+
+                if(User::where('id', $id)->update($data)){
+                    return $this->respondSuccess('Successful edit.');
+                }
+            }
+            catch(\Illuminate\Database\QueryException $e){
+                $errorCode = $e->errorInfo[1];
+
+                switch ($errorCode) {
+                    //1062 == Duplicate entry for unique MySQL
+                    case 1062: 
+                        return $this->respondDuplicate('Duplicate Entry.', ['user'=>'This user already exists.']); 
+                        break;
+                    default:
+                        return $this->respondInvalid('Invalid.', ['user'=> request()->all()]); 
+                        break;
+                }
             }
         }
-        catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-
-            switch ($errorCode) {
-                //1062 == Duplicate entry for unique MySQL
-                case 1062: 
-                    return $this->respondDuplicate('Duplicate Entry.', ['user'=>'This user already exists.']); 
-                    break;
-                default:
-                    return $this->respondInvalid('Invalid.', ['user'=> request()->all()]); 
-                    break;
-            }
-        } 
     }
 
     /**

@@ -1,16 +1,30 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 
+export function getUser(id){
+	return function(dispatch){	
+		dispatch({type: 'FETCH_USER'})
+		const cookies = new Cookies();
+		axios.get('/api/users/'+id+'/?token='+cookies.get('token'))
+		.then((response) => {
+			console.log(response.data);
+			dispatch({type: 'FETCH_USER_SUCCESS', form: response.data})
+		})
+		.catch((err) => { 
+			dispatch({type: 'FETCH_USER_ERROR', form: null}) 
+		})
+	}
+}
 
 export function getUsers(){
 	return function(dispatch){	
 		const cookies = new Cookies();
 		axios.get('/api/users?token='+cookies.get('token'))
 		.then((response) => {
-			dispatch({type: 'GET_USERS', payload: response.data.users})
+			dispatch({type: 'FETCH_USERS', payload: response.data.users})
 		})
 		.catch((err) => { 
-			dispatch({type: 'GET_USERS', payload: null}) 
+			dispatch({type: 'FETCH_USERS', payload: null}) 
 		})
 	}
 }

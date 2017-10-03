@@ -1,13 +1,12 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../../components/Sidebar'
 import Cookies from 'universal-cookie'
 import { connect } from "react-redux"
-import store from "../store"
-import { modalAddUserToggle, getUsers, submitForm, updateUser, deleteUser, modalEditUserToggle } from '../actions/usersActions'
-import Modal from '../components/Modal'
+import store from "../../store"
+import { modalAddUserToggle, getUsers, submitForm, updateUser, deleteUser, modalEditUserToggle } from '../../actions/usersActions'
+import Modal from '../../components/Modal'
 import axios from 'axios'
-import NavbarDos from '../components/NavbarDos'
-import { Link } from 'react-router-dom'
+import NavbarDos from '../../components/NavbarDos'
 
 @connect((store) => {
 	return {
@@ -18,7 +17,7 @@ import { Link } from 'react-router-dom'
 		errors: store.users.errors
 	}
 })
-export class UsersPage extends React.Component {
+export class UsersCreatePage extends React.Component {
 	constructor(props){
 		super(props);	
 		this.state = { first_name: '', last_name: '', email: '', password: '', edit: { id: '', first_name: 'test', last_name: '', email: '', password: '' } };
@@ -119,28 +118,28 @@ export class UsersPage extends React.Component {
 						      </div>
 						      <form onSubmit={(e)=> this.submitForm(e, 'ADD')}>
 							      <div className="modal-body">
-									  <div className="row">
-										  <div className="col-sm-6 form-group">
-										    <label>First Name</label>
+									  <div className="form-group row">
+										  <div className="col-sm-6">
+										    <label for="first_name">First Name</label>
 										    <input type="text" className="form-control" name="first_name" id="first_name" placeholder="First name" value={this.state.first_name} onChange={this.handleInputChange} />
 										  	{this.props.errors && <small className="form-control-feedback">{this.props.errors.first_name}</small>}
 										  </div>
-										  <div className="col-sm-6 form-group">
-										    <label>Last Name</label>
+										  <div className="col-sm-6">
+										    <label for="last_name">Last Name</label>
 										    <input type="text" className="form-control" name="last_name" id="last_name" placeholder="Last name" value={this.state.last_name} onChange={this.handleInputChange} />
 										  
 										  </div>
 									  </div>
 									  <div className="form-group">
-									    <label>Email address</label>
+									    <label for="email">Email address</label>
 									    <input type="email" className="form-control" name="email" id="email" placeholder="Enter email" value={this.state.email} onChange={this.handleInputChange} />
 									  </div>
 									  <div className="form-group">
-									    <label>Password</label>
+									    <label for="password">Password</label>
 									    <input type="password" className="form-control" name="password" id="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange} />
 									  </div>
 									  <div className="form-group">
-									    <label>Role</label>
+									    <label for="role">Role</label>
 									    <select className="form-control" id="role">
 									      <option value="administrator">Administrator</option>
 									      <option value="member">Member</option>
@@ -168,26 +167,26 @@ export class UsersPage extends React.Component {
 							      <div className="modal-body">
 									  <div className="form-group row">
 										  <div className="col-sm-6">
-										    <label>First Name</label>
+										    <label for="first_name">First Name</label>
 										    <input type="text" className="form-control" name="first_name" id="first_name" placeholder="First name" value={this.state.edit.first_name} onChange={this.handleEditInputChange} />
 										  	{this.props.errors && <small className="form-control-feedback">{this.props.errors.first_name}</small>}
 										  </div>
 										  <div className="col-sm-6">
-										    <label>Last Name</label>
+										    <label for="last_name">Last Name</label>
 										    <input type="text" className="form-control" name="last_name" id="last_name" placeholder="Last name" value={this.state.edit.last_name} onChange={this.handleEditInputChange} />
 										  
 										  </div>
 									  </div>
 									  <div className="form-group">
-									    <label>Email address</label>
+									    <label for="email">Email address</label>
 									    <input type="email" className="form-control" name="email" id="email" placeholder="Enter email" value={this.state.edit.email} onChange={this.handleEditInputChange} />
 									  </div>
 									  <div className="form-group">
-									    <label>Password</label>
+									    <label for="password">Password</label>
 									    <input type="password" className="form-control" name="password" id="password" placeholder="Password" value={this.state.edit.password} onChange={this.handleEditInputChange} />
 									  </div>
 									  <div className="form-group">
-									    <label>Role</label>
+									    <label for="role">Role</label>
 									    <select className="form-control" id="role">
 									      <option value="administrator">Administrator</option>
 									      <option value="member">Member</option>
@@ -202,52 +201,41 @@ export class UsersPage extends React.Component {
 						    </div>
 						  </div>
 					</Modal>
-			      	<div className="screen__container row">
+			      	<div className="row">
 				        <Sidebar/>
 
-				        <main className="col-sm-9 ml-sm-auto col-md-10 main" role="main">
-						<div className="page-header">
-							<div className="container">
-								<div className="row">
-									<div className="col-6 header__title"><h1 className="title">Users</h1></div>
-									<div className="col-6 d-flex justify-content-end header__actions">
-										<Link to={`${this.props.match.url}/create`} className="btn btn-primary">Add Users</Link>
-									</div>
-								</div>
-							</div>
+				        <main className="col-sm-9 ml-sm-auto col-md-10 pt-3 main" role="main">
+						<h1>Users</h1>
+						<div className="row">
+							<div className="col-6"></div>
+							<div className="col-6 d-flex justify-content-end"><a href="#" className="btn btn-primary" onClick={this.addUser}>Add Users</a></div>
 						</div>
-						<div className="page-body p-5">	
-							<div className="container">
-								<div className="row">
-							          <div className="table-responsive">
-							            <table className="table table-striped">
-							              <thead>
-							                <tr>
-							                  <th>#</th>
-							                  <th>First Name</th>
-							                  <th>Last Name</th>
-							                  <th>Email</th>
-							                  <th>Created</th>
-							                  <th>Actions</th>
-							                </tr>
-							              </thead>
-							              <tbody>
-							                { this.props.users && this.props.users.map((user)=> (
-												<tr key={user.id}>
-									                  <td>{user.id}</td>
-									                  <td>{user.first_name}</td>
-									                  <td>{user.last_name}</td>
-									                  <td>{user.email}</td>
-									                  <td>{user.created_at}</td>
-									                  <td><a href="#" onClick={() => this.deleteUser(user.id)}><i className="fa fa-trash"></i></a> <Link to={`${this.props.match.url}/${user.id}/edit`}><i className="fa fa-pencil"></i></Link></td>
-												 </tr>
-											)) }
-							              </tbody>
-							            </table>
-							          </div>
-							        </div>
-							    </div> 
-				        </div>
+				          <div className="table-responsive mt-3">
+				            <table className="table table-striped">
+				              <thead>
+				                <tr>
+				                  <th>#</th>
+				                  <th>First Name</th>
+				                  <th>Last Name</th>
+				                  <th>Email</th>
+				                  <th>Created</th>
+				                  <th>Actions</th>
+				                </tr>
+				              </thead>
+				              <tbody>
+				                { this.props.users && this.props.users.map((user)=> (
+									<tr key={user.id}>
+						                  <td>{user.id}</td>
+						                  <td>{user.first_name}</td>
+						                  <td>{user.last_name}</td>
+						                  <td>{user.email}</td>
+						                  <td>{user.created_at}</td>
+						                  <td><a href="#" onClick={() => this.deleteUser(user.id)}><i className="fa fa-trash"></i></a> <a href="#" onClick={() => this.editUser(user.id, user.first_name, user.last_name, user.email)}><i className="fa fa-pencil"></i></a></td>
+									 </tr>
+								)) }
+				              </tbody>
+				            </table>
+				          </div>
 				        </main>
 			        </div>
 			</div>

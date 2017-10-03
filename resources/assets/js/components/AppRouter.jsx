@@ -8,7 +8,7 @@ import { HomePage } from "../components/HomePage";
 import { AboutPage } from "../components/AboutPage";
 import { BlogPage } from "../components/BlogPage";
 import { LoginPage } from "../components/LoginPage";
-import { DashboardContainers } from "../components/DashboardContainers";
+import { DashboardContainer } from "../components/DashboardContainer";
 
 import axios from 'axios'
 import Cookies from 'universal-cookie';
@@ -55,14 +55,8 @@ export default class AppRouter extends React.Component {
 			{'url': '/blog', 'title': 'Blog', 'component': BlogPage },
 			{'url': '/about', 'title': 'About', 'component': AboutPage},
 			{'url': '/login', 'title': 'Login', 'component': LoginPage},
-			{'url': '/dashboard', 'title': 'Dashboard', 'component': DashboardContainers, 'member': true},
+			{'url': '/dashboard', 'title': 'Dashboard', 'component': DashboardContainer, 'member': true},
 		];
-
-		let PrivateRoute = (props) => {
-			//if the status is loading then wait until loaded to check if authenticated or not
-			let PageComponent = props.component;
-			return <Route path={this.props.path} render={(props)=> <PageComponent {...props} /> }/>;
-		}
 
 		return (
 			<Router>
@@ -71,7 +65,7 @@ export default class AppRouter extends React.Component {
 					<Route path='/about' component={AboutPage} />
 					<Route path='/blog' component={BlogPage} />
 					<Route path='/login' render={(props)=> <LoginPage loggedInPath="/dashboard" {...props} />}/>
-					<PrivateRoute path='/dashboard' component={DashboardContainers} {...this.props} />
+					<Route path='/dashboard' component={DashboardContainer} />
 				</Switch>
 			</Router>
 		);

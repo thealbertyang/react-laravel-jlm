@@ -46,8 +46,6 @@ Route::get('/user', function(){
 
 Route::apiResource('users', 'UsersController');
 
-Route::post('/users', 'UsersController@store');
-
 Route::post('/login', function(Request $request)
     {
         // grab credentials from the request
@@ -66,7 +64,3 @@ Route::post('/login', function(Request $request)
         // all good so return the token
         return response()->json(compact('token'));
     });
-/*
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return response()->$request->user();
-});

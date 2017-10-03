@@ -1,41 +1,48 @@
 import React from "react"
 import { connect } from "react-redux"
 import store from "../store"
-import { login, logout } from '../actions/authActions'
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie';
-import AuthController from "../components/AuthController";
-import Sidebar from "../components/Sidebar"
-import NavbarDos from '../components/NavbarDos'
+import { Route, Switch } from "react-router-dom";
+
 import { DashboardPage } from "../components/DashboardPage";
 import { UsersPage } from "../components/UsersPage";
-import { BrowserRouter as Router, Route, NavLink, Link, Switch } from "react-router-dom";
+import { UsersEditPage } from "../components/dashboard/UsersEditPage";
+import { UsersCreateEditPage } from "../components/dashboard/UsersCreateEditPage";
 
 @connect(
 	(store) => {
 	return {
-		auth: {
-			authenticated: store.auth.authenticated
-		}
+		auth: store.auth.authenticated,
+		status: store.auth.status
 	}
 })
 export class DashboardContainer extends React.Component {
 	constructor(props){
 		super(props);
+
 	}
-	componentWillMount(){
-		console.log('Dashboard container did load');
+	componentDidMount(){
+		if(this.props.status == 'logout' || this.props.status == 'fetch_error'){
+			window.location.href = '/';
+		}
 	}
+	
+	componentDidUpdate(){
+		if(this.props.status == 'logout' || this.props.status == 'fetch_error'){
+			window.location.href = '/';
+		}
+	}
+
 	render(){
-
-				return (
-					<Switch>
-						<Route path={`${match.url}`} component={DashboardPage} />
-						<Route path={`${match.url}/users`} component={UsersPage} />
-					</Switch>
-				);	
-
+		return (
+			<Switch>
+				<Route path={`${this.props.match.url}`} exact component={DashboardPage} />
+				<Route path={`${this.props.match.url}/users`} exact component={UsersPage} />
+				<Route path={`${this.props.match.url}/users/create`} exact render={(props)=> { return (<UsersCreateEditPage type="CREATE" {...props} />) }} />
+				<Route path={`${this.props.match.url}/users/:id`} exact component={UsersEditPage} />
+				<Route path={`${this.props.match.url}/users/:id/edit`} exact render={(props)=> { return (<UsersCreateEditPage type="EDIT" {...props} />) }} />
+			</Switch>
+		);	
 	}
 }
 

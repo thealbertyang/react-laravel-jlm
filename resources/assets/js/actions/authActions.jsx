@@ -27,7 +27,7 @@ export function login(username, password){
 		const cookies = new Cookies();
 		dispatch({type: 'AUTH_USER'}); 
 
-		axios.post('/api/login', { email: username, password: password })
+		axios.post('/api/login', { email: username, password: password }) 
 		.then((response) => { 
 			cookies.set('token', response.data.token);
 			console.log(response.data);

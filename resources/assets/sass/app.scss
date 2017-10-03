@@ -1,6 +1,6 @@
 
 // Fonts
-//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,600");
 
 // Icons
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
@@ -11,18 +11,8 @@
 // Bootstrap
 @import "~bootstrap/scss/bootstrap.scss";
 
-// Prismn
-@import "~prismjs/themes/prism-okaidia.css";
-
-// Prism line-numbers
-@import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
-
 html, body{
 	height: 100%;
-}
-
-body {
-	padding-top: 3.5rem;
 }
 
 #root, #app {
@@ -42,6 +32,192 @@ body {
 	.form-control {
 	    padding: .5rem .5rem;
 	    font-size: .9rem;
+	}
+}
+
+.btn {
+	font-family: 'Lato', sans-serif;
+	font-size: 12px;
+	border-radius: 3px;
+	border: 0px;
+	padding: 11px 25px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 400;
+	color: #ffffff;
+	background-color: #315ca7;
+}
+
+.table {
+	background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.page-header {
+	display: flex;
+	height: 10rem;
+	align-items: flex-end;
+	padding: 1 1rem;
+	background-color: #ececec;
+
+	.header__title {
+		align-items: flex-end;
+    	display: flex;
+	    margin-bottom: 20px;
+	    padding: 0;
+
+	    .title {
+		    color: #565656;
+		    font-weight: 600;
+		    float: left;
+		    font-size: 30px;
+		    margin: 0;
+		}
+	}
+
+	.header__actions {
+		align-items: flex-end;
+    	display: flex;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+}
+
+.page-msg {
+	color: #ffffff;
+
+
+	&.has-success {
+		background-color: #6dca33;
+	}
+
+	.message {
+		padding: 50px 0px;
+	}
+}
+
+.page-body {
+	flex: 1 1;
+	display: flex;
+	background-color: #f9f9f9;
+}
+
+.table {
+	border: 1px solid rgba(103, 159, 255, 0.28);
+
+	thead {
+		background-color: #f6f6f6;
+
+		th {
+			color: #444444;
+	    	font-weight: 600;
+			border-top: initial;
+		}
+	}
+
+	tbody {
+		tr {
+			&:nth-child(odd) {
+				background-color: #fdfdfd;
+			}
+			&:hover, &:focus {
+				background-color: #f9f9f9;
+			}
+		}
+	}
+}
+
+.form {
+	padding-left: 0;
+    padding-right: 0;
+}
+
+.card {
+	border-radius: 0px;
+}
+
+.card-header {
+	background-color: #fff;
+    padding: 1.75rem 1.25rem;
+
+	h5 {
+		margin: 0px;
+	}
+}
+
+.card-block {
+
+	.form-control {
+		font-family: 'Lato', sans-serif;
+    	font-size: 12px;
+        box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.15);
+	    background-color: #fff;
+	    height: 43px;
+	    border-radius: 2px;
+	    border: none;
+	    color: #505050;
+	    font-weight: 400;
+	    letter-spacing: 1px;
+	    font-weight: 500;
+	    outline: none;
+	}
+}
+
+.card-footer {
+	background-color: #fff;
+    padding: 1.75rem 1.25rem;
+
+
+    .btn {
+    	
+    	&:nth-child(n+2){
+    		margin-left: .25rem;
+    	}
+    }
+}
+
+.login {
+	background: transparent url(/img/bg.jpg) center center / cover no-repeat;
+	min-height: 100vh;
+
+	.login__logo {
+	    margin: 0 auto 35px;
+	    width: 250px;
+
+	    .logo {
+	    	width: 100%;
+	    	height: 100%;
+	    }
+	}
+
+	.form-control {
+		font-family: 'Lato', sans-serif;
+    	font-size: 12px;
+		background-color: rgba(62, 58, 58, 0.8);
+	    border-radius: 3px;
+	    height: 35px;
+	    border: 0px;
+	    text-indent: 10px;
+	    color: #d4d4d4;
+	    letter-spacing: 1px;
+	    font-weight: 100;
+	    outline: none;
+	    padding: initial;
+	}
+
+	.btn {
+		font-family: 'Lato', sans-serif;
+    	font-size: 12px;
+		cursor: pointer;
+	    float: left;
+	    border-radius: 3px;
+	    border: 0px;
+	    padding: 11px 25px;
+	    text-transform: uppercase;
+	    letter-spacing: 1px;
+	    font-weight: 400;
+	    color: #ffffff;
+	    background-color: #315ca7;
 	}
 }
 
@@ -212,6 +388,9 @@ body {
 }
 
 .screen {
+	display: flex;
+    flex: 1 1;
+
 	&.container-fluid {
 	    margin-right: auto;
 	    margin-left: auto;
@@ -220,18 +399,76 @@ body {
 	    width: 100%;
 	}
 
-	.sidebar {padding: 20px;
-		    padding-left: 0;
-    padding-right: 0;
-		    position: fixed;
-    top: 56px;    background-color: #f8f9fa!important;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    
-    overflow-x: hidden;
-    overflow-y: auto;
-    border-right: 1px solid #eee;
+	.screen__container {
+	    flex: 1 1;
+	}
+
+	.sidebar {
+		min-width: 300px;
+		padding: 20px;
+	    padding-left: 0;
+	    padding-right: 0;
+		position: fixed;
+	    top: 0px;    
+	    bottom: 0;
+	    left: 0;
+	    z-index: 1000;
+	    overflow-x: hidden;
+	    overflow-y: auto;
+	    background-color: #22244e;
+	    background: url(/img/sidebar.jpg) left center / cover  no-repeat;
+
+	    .sidebar__logo {
+	    	padding: 35px 80px;
+	    }
+
+	    .logo {
+	    	width: 100%;
+	    }
+
+	    .nav-link {
+			color: #ffffff;
+			font-family: 'Lato', sans-serif;
+		    padding: 15px 30px;
+		    display: block;
+		    width: 100%;
+		    box-sizing: border-box;
+		    line-height: 1;
+		    letter-spacing: 1px;
+		    font-weight: 500;
+		    font-size: 13px;
+		    border-left: 5px solid transparent;
+		    border-radius: initial;
+
+		    i.fa {
+			    font-size: 20px;
+			    margin-right: 5px;
+			    width: 25px;
+			    text-align: center;
+			    vertical-align: middle;
+			    color: rgb(223, 231, 255);
+			}
+
+			span {
+			    text-align: left;
+			    vertical-align: middle;
+			    padding: 10px 0px;
+			}
+
+		    &:hover, &:focus {
+		    	color: #e8e8e8;
+    			background-color: rgba(255, 255, 255, 0.09);
+		    }
+		}
+
+
+	}
+	
+	.main {
+		padding: 0;
+	    flex-direction: column;
+	    height: 100%;
+	    display: flex;
 	}
 }
 
@@ -249,15 +486,7 @@ body {
 
 	
 }
-.screen {
-		.main {
-			h1 {
-				margin-bottom: 20px;
-			    padding-bottom: 9px;
-			    border-bottom: 1px solid #eee;
-			}
-		}
-	}
+
 .placeholder img {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -272,10 +501,12 @@ body {
 }
 
 .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
-    color: #fff;
-    cursor: default;
-    background-color: #007bff;
+    color: #ffffff;
+    background-color: rgba(148, 148, 148, 0.28);
+    border-left: 5px solid #477bd6;
 }
+
+
 .footer {
 	background-color: black;
 	padding: 6.5em 0;
